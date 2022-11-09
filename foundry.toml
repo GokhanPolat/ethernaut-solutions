@@ -4,3 +4,22 @@ out = 'out'
 libs = ['lib']
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
+
+# Custom Configs ---------------------------------------------------------------
+remappings = [
+'ds-test/=lib/forge-std/lib/ds-test/src',
+'forge-std/=lib/forge-std/'
+]
+
+optimizer = true
+optimizer_runs = 20_000
+ffi = true
+
+# Print the sizes of the compiled contracts
+sizes = true
+
+
+[rpc_endpoints]
+mainnet         = "${RPC_ETHEREUM}"
+optimism        = "${RPC_OPTIMISM}"
+optimism_goerli = "${RPC_OPTIMISM_GOERLI}"
