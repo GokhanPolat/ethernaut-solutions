@@ -10,6 +10,8 @@ out/
 # Dotenv file
 .env
 
+broadcast
+
 # Created by https://www.toptal.com/developers/gitignore/api/macos,emacs,solidity,soliditytruffle,node,dotenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,emacs,solidity,soliditytruffle,node,dotenv
 
