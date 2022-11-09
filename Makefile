@@ -42,6 +42,7 @@ COINFLIP_TESTS    = ./src/3_CoinFlip/test/CoinFlipTest.t.sol
 COINFLIP_SCRIPT   = ./src/3_CoinFlip/script/CoinFlip.s.sol
 
 
+TELEPHONE_SCRIPT   = ./src/4_Telephone/script/Telephone.s.sol
 
 
 ###############################################################################
@@ -83,3 +84,11 @@ coinflip-deploy-goerli  :; ## CoinFlip deploy Goerli testnet
 
 coinflip-hack-goerli    :; ## Hack CoinFlip Contract on Goerli testnet
 	forge script ${COINFLIP_SCRIPT}:CoinFlipHack --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+
+###############################################################################
+#                                 4_TELEPHONE                                 #
+###############################################################################
+
+# EXPLOIT #####################################################################
+telephone-deploy-goerli  :; ## CoinFlip deploy Goerli testnet
+	forge script ${TELEPHONE_SCRIPT}:Telephone --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
