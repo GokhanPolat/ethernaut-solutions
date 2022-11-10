@@ -31,19 +31,20 @@ _verbose_ :; ## for test verbosity use 'verbose=vvv' at the end of command, v co
 ###############################################################################
 FORGE_TEST_WITH_PATH      = forge test --match-path
 FORGE_TEST_WITH_CONTRACTS = forge test --contracts
+FORGE_SCRIPT              = forge script
 IGNORE_FLYCHECK           = --no-match-contract=flycheck
 
 # SOLC_OPENZEPPELIN_REMAPPING = openzeppelin-contracts=lib/openzeppelin-contracts
 
 
 # CONTRACTS ###################################################################
-COINFLIP_CONTRACT = ./src/3_CoinFlip/CoinFlipSolution.sol
-COINFLIP_TESTS    = ./src/3_CoinFlip/test/CoinFlipTest.t.sol
-COINFLIP_SCRIPT   = ./src/3_CoinFlip/script/CoinFlip.s.sol
+COINFLIP_CONTRACT     = ./src/3_CoinFlip/CoinFlipSolution.sol
+COINFLIP_TESTS        = ./src/3_CoinFlip/test/CoinFlipTest.t.sol
+COINFLIP_SCRIPT       = ./src/3_CoinFlip/script/CoinFlip.s.sol
 
+TELEPHONE_SCRIPT      = ./src/4_Telephone/script/Telephone.s.sol
 
-TELEPHONE_SCRIPT   = ./src/4_Telephone/script/Telephone.s.sol
-
+FORCE_CONTRACT_SCRIPT = ./src/7_Force/script/Force.s.sol
 
 ###############################################################################
 #                                  forge commands                             #
@@ -64,7 +65,6 @@ snapshot      :; forge snapshot              ## Create a snapshot of each test's
 ###############################################################################
 #                                   COINFLIP                                  #
 ###############################################################################
-
 # TESTS #######################################################################
 
 # Best for testing which are we see functions working or not.
@@ -79,16 +79,22 @@ coinflip-test-fork    :; ## Optimism Fork CoinFlip
 coinflip-test-anvil     :; ## CoinFlip test with 'anvil -b 3'
 	${FORGE_TEST_WITH_PATH} ${COINFLIP_TESTS} -f http://localhost:8545 $(verbose) --gas-report
 
-coinflip-deploy-goerli  :; ## CoinFlip deploy Goerli testnet
+coinflip-deploy-goerli  :; ## CoinFlip deploy OPT Goerli testnet
 	forge script ${COINFLIP_SCRIPT}:CoinFlip --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
-coinflip-hack-goerli    :; ## Hack CoinFlip Contract on Goerli testnet
+coinflip-hack-goerli    :; ## Hack CoinFlip Contract on OPT Goerli testnet
 	forge script ${COINFLIP_SCRIPT}:CoinFlipHack --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 ###############################################################################
 #                                 4_TELEPHONE                                 #
 ###############################################################################
-
 # EXPLOIT #####################################################################
-telephone-deploy-goerli  :; ## CoinFlip deploy Goerli testnet
+telephone-deploy-goerli  :; ## CoinFlip deploy OPT Goerli testnet
 	forge script ${TELEPHONE_SCRIPT}:Telephone --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+
+###############################################################################
+#                                   7_FORCE                                   #
+###############################################################################
+# EXPLOIT #####################################################################
+forcesolution-hack-goerli  :; ## ForceSolution, deploy OPT Goerli testnet
+	${FORGE_SCRIPT} ${FORCE_CONTRACT_SCRIPT}:Force --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
