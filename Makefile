@@ -46,6 +46,9 @@ TELEPHONE_SCRIPT      = ./src/4_Telephone/script/Telephone.s.sol
 
 FORCE_CONTRACT_SCRIPT = ./src/7_Force/script/Force.s.sol
 
+KING_CONTRACT_TESTS   = ./src/9_King/test/KingTest.t.sol
+KING_CONTRACT_SCRIPT  = ./src/9_King/script/KingScript.s.sol
+
 ###############################################################################
 #                                  forge commands                             #
 ###############################################################################
@@ -69,32 +72,43 @@ snapshot      :; forge snapshot              ## Create a snapshot of each test's
 
 # Best for testing which are we see functions working or not.
 # Working files: only test file and interfaces if needed.
-coinflip-test-fork    :; ## Optimism Fork CoinFlip
+coinflip-test-fork :; ## Optimism Fork CoinFlip
 	${FORGE_TEST_WITH_CONTRACTS} ${COINFLIP_TESTS} ${verbose} --gas-report
 
 # HACKING #####################################################################
 # Best for hacking on real network, deploy do tx and write script etc.
 # Working files: Actual contracts, hack contracts, scripts,
 # deploy all off them and make real txs.
-coinflip-test-anvil     :; ## CoinFlip test with 'anvil -b 3'
+coinflip-test-anvil :; ## CoinFlip test with 'anvil -b 3'
 	${FORGE_TEST_WITH_PATH} ${COINFLIP_TESTS} -f http://localhost:8545 $(verbose) --gas-report
 
-coinflip-deploy-goerli  :; ## CoinFlip deploy OPT Goerli testnet
+coinflip-deploy-optGoerli :; ## CoinFlip deploy OPT Goerli testnet
 	forge script ${COINFLIP_SCRIPT}:CoinFlip --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
-coinflip-hack-goerli    :; ## Hack CoinFlip Contract on OPT Goerli testnet
+coinflip-hack-optGoerli :; ## Hack CoinFlip Contract on OPT Goerli testnet
 	forge script ${COINFLIP_SCRIPT}:CoinFlipHack --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 ###############################################################################
 #                                 4_TELEPHONE                                 #
 ###############################################################################
 # EXPLOIT #####################################################################
-telephone-deploy-goerli  :; ## CoinFlip deploy OPT Goerli testnet
+telephone-deploy-optGoerli :; ## CoinFlip deploy OPT Goerli testnet
 	forge script ${TELEPHONE_SCRIPT}:Telephone --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 ###############################################################################
 #                                   7_FORCE                                   #
 ###############################################################################
 # EXPLOIT #####################################################################
-forcesolution-hack-goerli  :; ## ForceSolution, deploy OPT Goerli testnet
+forcesolution-hack-optGoerli :; ## ForceSolution, deploy OPT Goerli testnet
 	${FORGE_SCRIPT} ${FORCE_CONTRACT_SCRIPT}:Force --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+
+###############################################################################
+#                                    9_KING                                   #
+###############################################################################
+
+# HACKING POC #################################################################
+king-test-anvil :; ## CoinFlip test with 'anvil -b 3'
+	${FORGE_TEST_WITH_PATH} ${KING_CONTRACT_TESTS} -f http://localhost:8545 $(verbose)
+
+king-hack-optGoerli :; ## Hack CoinFlip Contract on OPT Goerli testnet
+	forge script ${KING_CONTRACT_SCRIPT}:KingScript --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
