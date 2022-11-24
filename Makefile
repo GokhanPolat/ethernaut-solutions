@@ -49,6 +49,11 @@ FORCE_CONTRACT_SCRIPT = ./src/7_Force/script/Force.s.sol
 KING_CONTRACT_TESTS   = ./src/9_King/test/KingTest.t.sol
 KING_CONTRACT_SCRIPT  = ./src/9_King/script/KingScript.s.sol
 
+REENTRANCE_CONTRACT_TEST = ./src/10_Re-entrance/test/ReentranceTest.t.sol
+REENTRANCE_CONTRACT_SCRIPT = ./src/10_Re-entrance/script/ReentranceAttackScript.s.sol
+
+
+
 ###############################################################################
 #                                  forge commands                             #
 ###############################################################################
@@ -83,17 +88,17 @@ coinflip-test-anvil :; ## CoinFlip test with 'anvil -b 3'
 	${FORGE_TEST_WITH_PATH} ${COINFLIP_TESTS} -f http://localhost:8545 $(verbose) --gas-report
 
 coinflip-deploy-optGoerli :; ## CoinFlip deploy OPT Goerli testnet
-	forge script ${COINFLIP_SCRIPT}:CoinFlip --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+	${FORGE_SCRIPT} ${COINFLIP_SCRIPT}:CoinFlip --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 coinflip-hack-optGoerli :; ## Hack CoinFlip Contract on OPT Goerli testnet
-	forge script ${COINFLIP_SCRIPT}:CoinFlipHack --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+	${FORGE_SCRIPT} ${COINFLIP_SCRIPT}:CoinFlipHack --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 ###############################################################################
 #                                 4_TELEPHONE                                 #
 ###############################################################################
 # EXPLOIT #####################################################################
 telephone-deploy-optGoerli :; ## CoinFlip deploy OPT Goerli testnet
-	forge script ${TELEPHONE_SCRIPT}:Telephone --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+	${FORGE_SCRIPT} ${TELEPHONE_SCRIPT}:Telephone --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 ###############################################################################
 #                                   7_FORCE                                   #
@@ -112,3 +117,16 @@ king-test-anvil :; ## CoinFlip test with 'anvil -b 3'
 
 king-hack-optGoerli :; ## Hack CoinFlip Contract on OPT Goerli testnet
 	forge script ${KING_CONTRACT_SCRIPT}:KingScript --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+
+
+###############################################################################
+#                                10_RE-ENTRANCY                               #
+###############################################################################
+
+# TEST ########################################################################
+reentrance-test-anvil :; ## Reentrance test with 'anvil -b 3'
+	${FORGE_TEST_WITH_PATH} ${REENTRANCE_CONTRACT_TEST} -f http://localhost:8545 $(verbose)
+
+# ATTACK ######################################################################
+reentrance-hack-optGoerli :; ## Hack Re-entrance Contract on OPT Goerli testnet
+	forge script ${REENTRANCE_CONTRACT_SCRIPT}:ReentranceAttackScript --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
