@@ -17,7 +17,7 @@ contract ReentranceAttackScript is Script, Test {
 
     vm.startBroadcast(deployerPrivateKey);
 
-    reentranceAttack = new ReentranceAttack(victimContract);
+    reentranceAttack = new ReentranceAttack(address(victimContract));
 
     victimContract.donate{value: 1}(address(reentranceAttack));
 
