@@ -125,7 +125,7 @@ king-hack-optGoerli :; ## Hack CoinFlip Contract on OPT Goerli testnet
 
 # TEST ########################################################################
 reentrance-test-anvil :; ## Reentrance test with 'anvil -b 3'
-	${FORGE_TEST_WITH_PATH} ${REENTRANCE_CONTRACT_TEST} -f http://localhost:8545 $(verbose)
+	${FORGE_TEST_WITH_CONTRACTS} ${REENTRANCE_CONTRACT_TEST} -f http://localhost:8545 $(verbose) --use solc:0.6.12
 
 # ATTACK ######################################################################
 reentrance-hack-optGoerli :; ## Hack Re-entrance Contract on OPT Goerli testnet

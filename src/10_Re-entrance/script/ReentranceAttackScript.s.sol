@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.6.12;
 
 import "forge-std/src/Script.sol";
 import "forge-std/src/Test.sol";
 
-import {ReentranceAttack} from "../ReentranceAttack.sol";
-import {IReentrance} from "../IReentrance.sol";
+import "../ReentranceAttack.sol";
+import "../IReentrance.sol";
 
 contract ReentranceAttackScript is Script, Test {
   ReentranceAttack private reentranceAttack;
