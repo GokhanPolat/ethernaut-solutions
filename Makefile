@@ -29,10 +29,12 @@ _verbose_ :; ## for test verbosity use 'verbose=vvv' at the end of command, v co
 ###############################################################################
 #                                  VARIABLES                                  #
 ###############################################################################
-FORGE_TEST_WITH_PATH      = forge test --match-path
-FORGE_TEST_WITH_CONTRACTS = forge test --contracts
-FORGE_SCRIPT              = forge script
-IGNORE_FLYCHECK           = --no-match-contract=flycheck
+FORGE_TEST_WITH_PATH        = forge test --match-path
+FORGE_TEST_WITH_CONTRACTS   = forge test --contracts
+FORGE_SCRIPT                = forge script
+FORGE_SCRIPT_WITH_CONTRACTS = forge script --contracts
+
+IGNORE_FLYCHECK             = --no-match-contract=flycheck
 
 # SOLC_OPENZEPPELIN_REMAPPING = openzeppelin-contracts=lib/openzeppelin-contracts
 
@@ -50,6 +52,7 @@ KING_CONTRACT_TESTS   = ./src/9_King/test/KingTest.t.sol
 KING_CONTRACT_SCRIPT  = ./src/9_King/script/KingScript.s.sol
 
 REENTRANCE_CONTRACT_TEST = ./src/10_Re-entrance/test/ReentranceTest.t.sol
+REENTRANCE_CONTRACT_PATH = ./src/10_Re-entrance/script/
 REENTRANCE_CONTRACT_SCRIPT = ./src/10_Re-entrance/script/ReentranceAttackScript.s.sol
 
 
@@ -129,4 +132,4 @@ reentrance-test-anvil :; ## Reentrance test with 'anvil -b 3'
 
 # ATTACK ######################################################################
 reentrance-hack-optGoerli :; ## Hack Re-entrance Contract on OPT Goerli testnet
-	forge script ${REENTRANCE_CONTRACT_SCRIPT}:ReentranceAttackScript --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+	${FORGE_SCRIPT_WITH_CONTRACTS} ${REENTRANCE_CONTRACT_PATH} ${REENTRANCE_CONTRACT_SCRIPT} --rpc-url ${RPC_OPTIMISM_GOERLI} --use solc:0.6.12 --broadcast -vvv

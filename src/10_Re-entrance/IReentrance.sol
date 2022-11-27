@@ -3,7 +3,7 @@ pragma solidity ^0.6.12;
 
 interface IReentrance {
   // mapping(address => uint256) public balances;
-  // function balances(address _address) external returns (uint256);
+  function balances(address _address) external returns (uint256);
 
   function donate(address _to) external payable;
 
