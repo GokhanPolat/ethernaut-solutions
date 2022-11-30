@@ -29,31 +29,33 @@ _verbose_ :; ## for test verbosity use 'verbose=vvv' at the end of command, v co
 ###############################################################################
 #                                  VARIABLES                                  #
 ###############################################################################
-FORGE_TEST_WITH_PATH        = forge test --match-path
+# FORGE_TEST_WITH_PATH        = forge test --match-path
 FORGE_TEST_WITH_CONTRACTS   = forge test --contracts
 FORGE_SCRIPT                = forge script
 FORGE_SCRIPT_WITH_CONTRACTS = forge script --contracts
 
-IGNORE_FLYCHECK             = --no-match-contract=flycheck
+# IGNORE_FLYCHECK             = --no-match-contract=flycheck
 
 # SOLC_OPENZEPPELIN_REMAPPING = openzeppelin-contracts=lib/openzeppelin-contracts
 
 
 # CONTRACTS ###################################################################
-COINFLIP_CONTRACT     = ./src/3_CoinFlip/CoinFlipSolution.sol
-COINFLIP_TESTS        = ./src/3_CoinFlip/test/CoinFlipTest.t.sol
-COINFLIP_SCRIPT       = ./src/3_CoinFlip/script/CoinFlip.s.sol
+# COINFLIP_TEST_PATH         = ./src/3_CoinFlip/test/
+COINFLIP_TEST              = ./src/3_CoinFlip/test/CoinFlipTest.t.sol
+COINFLIP_SCRIPT            = ./src/3_CoinFlip/script/CoinFlip.s.sol
 
-TELEPHONE_SCRIPT      = ./src/4_Telephone/script/Telephone.s.sol
+TELEPHONE_SCRIPT           = ./src/4_Telephone/script/Telephone.s.sol
+# TELEPHONE_SCRIPT_PATH      = ./src/4_Telephone/script/
 
-FORCE_CONTRACT_SCRIPT = ./src/7_Force/script/Force.s.sol
+FORCE_SCRIPT               = ./src/7_Force/script/Force.s.sol
+# FORCE_SCRIPT_PATH          = ./src/7_Force/script/
 
-KING_CONTRACT_TESTS   = ./src/9_King/test/KingTest.t.sol
-KING_CONTRACT_SCRIPT  = ./src/9_King/script/KingScript.s.sol
+KING_TESTS                 = ./src/9_King/test/KingTest.t.sol
+# KING_SCRIPT_PATH           = ./src/9_King/script/
 
-REENTRANCE_CONTRACT_TEST = ./src/10_Re-entrance/test/ReentranceTest.t.sol
-REENTRANCE_CONTRACT_PATH = ./src/10_Re-entrance/script/
-REENTRANCE_CONTRACT_SCRIPT = ./src/10_Re-entrance/script/ReentranceAttackScript.s.sol
+REENTRANCE_TEST            = ./src/10_Re-entrance/test/ReentranceTest.t.sol
+REENTRANCE_SCRIPT_PATH     = ./src/10_Re-entrance/script/
+REENTRANCE_SCRIPT          = ./src/10_Re-entrance/script/ReentranceAttackScript.s.sol
 
 
 
@@ -81,14 +83,14 @@ snapshot      :; forge snapshot              ## Create a snapshot of each test's
 # Best for testing which are we see functions working or not.
 # Working files: only test file and interfaces if needed.
 coinflip-test-fork :; ## Optimism Fork CoinFlip
-	${FORGE_TEST_WITH_CONTRACTS} ${COINFLIP_TESTS} ${verbose} --gas-report
+	${FORGE_TEST_WITH_CONTRACTS} ${COINFLIP_TEST} ${verbose} --gas-report
 
 # HACKING #####################################################################
 # Best for hacking on real network, deploy do tx and write script etc.
 # Working files: Actual contracts, hack contracts, scripts,
 # deploy all off them and make real txs.
 coinflip-test-anvil :; ## CoinFlip test with 'anvil -b 3'
-	${FORGE_TEST_WITH_PATH} ${COINFLIP_TESTS} -f http://localhost:8545 $(verbose) --gas-report
+	${FORGE_TEST_WITH_CONTRACTS} ${COINFLIP_TEST} -f http://localhost:8545 $(verbose) --gas-report
 
 coinflip-deploy-optGoerli :; ## CoinFlip deploy OPT Goerli testnet
 	${FORGE_SCRIPT} ${COINFLIP_SCRIPT}:CoinFlip --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
@@ -108,7 +110,7 @@ telephone-deploy-optGoerli :; ## CoinFlip deploy OPT Goerli testnet
 ###############################################################################
 # EXPLOIT #####################################################################
 forcesolution-hack-optGoerli :; ## ForceSolution, deploy OPT Goerli testnet
-	${FORGE_SCRIPT} ${FORCE_CONTRACT_SCRIPT}:Force --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+	${FORGE_SCRIPT} ${FORCE_SCRIPT}:Force --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 ###############################################################################
 #                                    9_KING                                   #
@@ -116,10 +118,10 @@ forcesolution-hack-optGoerli :; ## ForceSolution, deploy OPT Goerli testnet
 
 # HACKING POC #################################################################
 king-test-anvil :; ## CoinFlip test with 'anvil -b 3'
-	${FORGE_TEST_WITH_PATH} ${KING_CONTRACT_TESTS} -f http://localhost:8545 $(verbose)
+	${FORGE_TEST_WITH_CONTRACTS} ${KING_TESTS} -f http://localhost:8545 $(verbose)
 
 king-hack-optGoerli :; ## Hack CoinFlip Contract on OPT Goerli testnet
-	forge script ${KING_CONTRACT_SCRIPT}:KingScript --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
+	${FORGE_SCRIPT} ${KING_CONTRACT_SCRIPT}:KingScript --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv
 
 
 ###############################################################################
@@ -128,8 +130,8 @@ king-hack-optGoerli :; ## Hack CoinFlip Contract on OPT Goerli testnet
 
 # TEST ########################################################################
 reentrance-test-anvil :; ## Reentrance test with 'anvil -b 3'
-	${FORGE_TEST_WITH_CONTRACTS} ${REENTRANCE_CONTRACT_TEST} -f http://localhost:8545 $(verbose) --use solc:0.6.12
+	${FORGE_TEST_WITH_CONTRACTS} ${REENTRANCE_TEST} -f http://localhost:8545 $(verbose) --use solc:0.6.12
 
 # ATTACK ######################################################################
 reentrance-hack-optGoerli :; ## Hack Re-entrance Contract on OPT Goerli testnet
-	${FORGE_SCRIPT_WITH_CONTRACTS} ${REENTRANCE_CONTRACT_PATH} ${REENTRANCE_CONTRACT_SCRIPT} --rpc-url ${RPC_OPTIMISM_GOERLI} --use solc:0.6.12 --broadcast -vvv
+	${FORGE_SCRIPT_WITH_CONTRACTS} ${REENTRANCE_SCRIPT_PATH} ${REENTRANCE_SCRIPT} --rpc-url ${RPC_OPTIMISM_GOERLI} --use solc:0.6.12 --broadcast -vvv
