@@ -29,7 +29,7 @@ _verbose_ :; ## for test verbosity use 'verbose=vvv' at the end of command, v co
 ###############################################################################
 #                                  VARIABLES                                  #
 ###############################################################################
-# FORGE_TEST_WITH_PATH        = forge test --match-path
+FORGE_TEST_WITH_PATH        = forge test --match-path
 FORGE_TEST_WITH_CONTRACTS   = forge test --contracts
 FORGE_SCRIPT                = forge script
 FORGE_SCRIPT_WITH_CONTRACTS = forge script --contracts
@@ -40,23 +40,22 @@ FORGE_SCRIPT_WITH_CONTRACTS = forge script --contracts
 
 
 # CONTRACTS ###################################################################
-# COINFLIP_TEST_PATH         = ./src/3_CoinFlip/test/
 COINFLIP_TEST              = ./src/3_CoinFlip/test/CoinFlipTest.t.sol
 COINFLIP_SCRIPT            = ./src/3_CoinFlip/script/CoinFlip.s.sol
 
 TELEPHONE_SCRIPT           = ./src/4_Telephone/script/Telephone.s.sol
-# TELEPHONE_SCRIPT_PATH      = ./src/4_Telephone/script/
 
 FORCE_SCRIPT               = ./src/7_Force/script/Force.s.sol
-# FORCE_SCRIPT_PATH          = ./src/7_Force/script/
 
 KING_TESTS                 = ./src/9_King/test/KingTest.t.sol
-# KING_SCRIPT_PATH           = ./src/9_King/script/
 
 REENTRANCE_TEST            = ./src/10_Re-entrance/test/ReentranceTest.t.sol
 REENTRANCE_SCRIPT_PATH     = ./src/10_Re-entrance/script/
 REENTRANCE_SCRIPT          = ./src/10_Re-entrance/script/ReentranceAttackScript.s.sol
 
+ELEVATOR_TEST              = ./src/11_Elevator/test/ElevatorTest.t.sol
+ELEVATOR_SCRIPT_PATH       = ./src/11_Elevator/script/
+ELEVATOR_SCRIPT            = ./src/11_Elevator/script/ElevatorScript.s.sol
 
 
 ###############################################################################
@@ -135,3 +134,16 @@ reentrance-test-anvil :; ## Reentrance test with 'anvil -b 3'
 # ATTACK ######################################################################
 reentrance-hack-optGoerli :; ## Hack Re-entrance Contract on OPT Goerli testnet
 	${FORGE_SCRIPT_WITH_CONTRACTS} ${REENTRANCE_SCRIPT_PATH} ${REENTRANCE_SCRIPT} --rpc-url ${RPC_OPTIMISM_GOERLI} --use solc:0.6.12 --broadcast -vvv
+
+
+###############################################################################
+#                                 11_ELEVATOR                                 #
+###############################################################################
+
+# TEST ########################################################################
+elevator-test-anvil :; ## Elevator test with 'anvil -b 3'
+	${FORGE_TEST_WITH_CONTRACTS} ${ELEVATOR_TEST} -f http://localhost:8545 $(verbose)
+
+# ATTACK ######################################################################
+elevator-hack-optGoerli :; ## Exploiting Elevator Contract on OPT Goerli testnet
+	${FORGE_SCRIPT_WITH_CONTRACTS} ${ELEVATOR_SCRIPT_PATH} ${ELEVATOR_SCRIPT} --rpc-url ${RPC_OPTIMISM_GOERLI} --broadcast -vvv

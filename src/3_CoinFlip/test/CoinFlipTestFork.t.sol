@@ -18,7 +18,7 @@ contract CoinFlipTest is Test {
 
   // Initialize ///////////////////////////////////////////////////////////////
   function setUp() external {
-    vm.createSelectFork(stdChains.OptimismGoerli.rpcUrl, 2546322);
+    vm.createSelectFork(stdChains["optimism_goerli"].rpcUrl, 2546322);
   }
 
   /////////////////////////////////////////////////////////////////////////////
