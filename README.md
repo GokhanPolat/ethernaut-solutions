@@ -1,4 +1,4 @@
-This repo cointains [ethernaut](https://ethernaut.openzeppelin.com/) solution and exploits for hacking.
+This repo contains [ethernaut](https://ethernaut.openzeppelin.com/) solution and exploits for hacking.
 
 I did work on CoinFlip contract two different methods.
 
