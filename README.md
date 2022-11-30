@@ -42,24 +42,6 @@ make coinflip-hack-goerli
 make # or make help
 ```
 
-# Project NOTES
-
-## 10 Re-entrance Attack
-
-Re-entrance contract is working on different compiler version (0.6.12). Foundry's forge-std library havin some issue with that version of compiler.
-If we want to work with this version, for that specific level we should downgrade the library and for other levels we should return back to orginal repo.
-
-Install library for this attack.
-
-```shell
-forge install foundry-rs/forge-std@2a2ce3692b8c1523b29de3ec9d961ee9fbbc43a6
-
-# for other levels first remove lib then reinstall again with main repo
-
-forge remove forge-std
-forge install foundry-rs/forge-std
-```
-
 # Disclaimer
 
 This repository does not constitute legal or investment advice. The preparers of this repository present it as an informational exercise documenting the due diligence involved in the secure development of the target contract only, and make no material claims or guarantees concerning the contract's operation post-deployment. The preparers of this repository assume no liability for any and all potential consequences of the deployment or use of this contract.
