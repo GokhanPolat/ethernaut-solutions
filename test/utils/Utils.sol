@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.15;
+pragma solidity >=0.6.12 <=0.9.0;
 
-import "forge-std/src/Test.sol";
+pragma experimental ABIEncoderV2;
+
+import "forge-std/Test.sol";
 
 /* solhint-disable private-vars-leading-underscore */
 contract Utils is Test {
