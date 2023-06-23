@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-import "forge-std/src/Test.sol";
+import "forge-std/Test.sol";
 
 // Custom test utils, createUser, mineBlocks etc.
 import {Utils} from "test/utils/Utils.sol";

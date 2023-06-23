@@ -3,7 +3,7 @@ pragma solidity >=0.6.12 <=0.9.0;
 
 pragma experimental ABIEncoderV2;
 
-import "forge-std/src/Test.sol";
+import "forge-std/Test.sol";
 
 /* solhint-disable private-vars-leading-underscore */
 contract Utils is Test {

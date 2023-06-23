@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "forge-std/src/Script.sol";
-import "forge-std/src/Test.sol";
+import "forge-std/Script.sol";
+import "forge-std/Test.sol";
 
 import {KingSolution} from "../KingSolution.sol";
 

@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-import "forge-std/src/Test.sol";
+import "forge-std/Test.sol";
 
 // Custom test utils, createUser, mineBlocks etc.
 import {Utils} from "test/utils/Utils.sol";
 
 import {ICoinFlip} from "src/3_CoinFlip/ICoinFlip.sol";
 
-// solhint-disable func-name-mixedcase
+// solhint-disable func-name-mixedcase, no-console
 contract CoinFlipTest is Test {
   // VARIABLES ////////////////////////////////////////////////////////////////
   address private coinFlipAddress = 0x64431fc25f34C618Eabe78371bF6ad106bBb74f3;
