@@ -8,3 +8,6 @@
 [submodule "lib/huff-vrgda"]
 	path = lib/huff-vrgda
 	url = https://github.com/Maddiaa0/huff-vrgda
+[submodule "lib/Huff-Console"]
+	path = lib/Huff-Console
+	url = https://github.com/AmadiMichael/Huff-Console
