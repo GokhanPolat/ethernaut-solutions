@@ -1,0 +1,8 @@
+#define macro MAIN() = takes (0) returns (0) {
+    push1 0x2a
+    push1 0x00
+    mstore
+    push1 0x20
+    push1 0x00
+    return
+}

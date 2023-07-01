@@ -14,6 +14,7 @@ libs = ['lib']
 optimizer = true
 optimizer_runs = 20_000
 ffi = true
+fuzz_runs = 1_000
 
 # Print the sizes of the compiled contracts
 sizes = true
